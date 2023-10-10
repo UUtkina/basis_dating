@@ -19,7 +19,7 @@ SELECT
 FROM 
     Products
 WHERE 
-    SupplierID != 1
+    SupplierID !=  1
 ORDER BY 
     Price DESC;
 //5.Вывести контактные имена клиентов, кроме тех, что из France и USA.
