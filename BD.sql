@@ -1,31 +1,43 @@
-//в связи с тем, что задание было дано поздно (после 22.00), я не успела нарисовать схему. Сделаю задание 1 в следующей ДР
+-- В рамках БД "онлайн-магазин" напишите след/запросы:
 
+-- Вывести название и стоимость в USD одного самого дорогого проданного товара (не используя агрегацию)
 
-//2.Вывести название и стоимость товаров от 20 EUR.
-SELECT 
-ProductName, Price
-FROM Products
+    SELECT
+        Products.ProductName, 
+        Products.Price * 1.05 AS Price_usd 
+    FROM Products 
+    JOIN OrderDetails ON Products.ProductID = OrderDetails.ProductID
+    ORDER BY Products.Price DESC
+    LIMIT 1
 
-WHERE
-		Price > 20
+-- Вывести два самых дорогих товара из категории Beverages из USA
 
-//3.Вывести страны поставщиков.   
-SELECT DISTINCT
-Country
-FROM Suppliers
-//4.  В упорядоченном по стоимости виде вывести название и стоимость товаров от всех поставщиков, кроме поставщика 1.
-SELECT 
-    ProductName, Price, SupplierID
-FROM 
-    Products
-WHERE 
-    SupplierID !=  1
-ORDER BY 
-    Price DESC;
-//5.Вывести контактные имена клиентов, кроме тех, что из France и USA.
-SELECT 
-ContactName,Country
-FROM
-Customers
-WHERE
-NOT Country IN ('France', 'USA')
+    SELECT * FROM [Products]
+    JOIN Categories ON Products.CategoryID = Categories.CategoryID
+    JOIN Suppliers ON Products.SupplierID = Suppliers.SupplierID
+    WHERE 
+        Categories.CategoryName = 'Beverages' 
+        AND
+        Suppliers.Country = 'USA'   
+    ORDER BY Products.Price DESC 
+    LIMIT 2
+
+-- Удалить товары с ценой менее 50 EUR
+
+    DELETE FROM Products
+    WHERE Price < 50
+
+-- Вывести список стран, которые поставляют морепродукты
+
+    SELECT Suppliers.Country FROM [Categories]
+    JOIN Products ON Products.CategoryID = Categories.CategoryID
+    JOIN Suppliers  ON Products.SupplierID = Suppliers.SupplierID
+
+    WHERE Categories.CategoryName = 'Seafood'
+
+-- Очистить поле ContactName у всех клиентов не из China
+
+    UPDATE Customers
+    SET 
+        ContactName = NULL
+    WHERE Country != 'China'
