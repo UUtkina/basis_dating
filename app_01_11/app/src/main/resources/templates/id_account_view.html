@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+
+<body>
+ <h1 th:text="'Account ID' + ${id}">Account</h1>
+
+ <table>
+   <tbody>
+   <thead>
+
+   <tr>
+       <th>ID</th>
+       <th>IBAN</th>
+       <th>BALANCE</th>
+   </tr>
+   </thead>
+   <tr th:each="account:${accounts}">
+     <td th:text="${account.id}"></td>
+     <td th:text="${account.iban}"></td>
+     <td th:text="${account.balance}"></td>
+   </tr>
+   </tbody>
+ </table>
+
+<script th:src="@{/js/script.js}" type="text/javascript" defer ></script>
+</body>
+</html>
