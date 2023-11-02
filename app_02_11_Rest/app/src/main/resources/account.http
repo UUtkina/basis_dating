@@ -1,0 +1,14 @@
+POST http://localhost:8080/accounts
+Content-Type: application/json
+
+{
+  "id": null,
+  "iban": "DE1236547899654",
+  "balance": 12336554
+}
+
+###
+GET http://localhost:8080/accounts
+Accept: application/json
+
+###
